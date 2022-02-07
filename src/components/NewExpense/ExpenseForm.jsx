@@ -2,43 +2,46 @@ import "./ExpenseForm.css";
 import React, { useState } from "react";
 
 function ExpenseForm() {
-  //   const [enteredTitle, setEnteredTitle] = useState("");
-  //   const [enteredAmount, setEnteredAmount] = useState("");
-  //   const [enteredDate, setEnteredDate] = useState("");
-
-  const [userInput, setUserInput] = useState({
-    enteredTitle: "",
-    enteredAmount: "",
-    enteredDate: "",
-  });
+  const [enteredTitle, setEnteredTitle] = useState("");
+  const [enteredAmount, setEnteredAmount] = useState("");
+  const [enteredDate, setEnteredDate] = useState("");
 
   const titleChangeHandler = function (e) {
-    setUserInput({
-      ...userInput,
-      enteredTitle: e.target.value,
-    });
+    setEnteredTitle(e.target.value);
   };
 
   const amountChangeHandler = function (e) {
-    setUserInput({
-      ...userInput,
-      enteredAmount: e.target.value,
-    });
+    setEnteredAmount(e.target.value);
   };
 
   const dateChangeHandler = function (e) {
-    setUserInput({
-      ...userInput,
-      enteredDate: e.target.value,
-    });
+    setEnteredDate(e.target.value);
+  };
+
+  const submitHandler = function (e) {
+    e.preventDefault();
+    const expenseData = {
+      title: enteredTitle,
+      amount: enteredAmount,
+      date: new Date(enteredDate),
+    };
+
+    console.log(expenseData);
+    setEnteredTitle("");
+    setEnteredAmount("");
+    setEnteredDate("");
   };
 
   return (
-    <form action="">
+    <form action="" onSubmit={submitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label htmlFor="">Title</label>
-          <input type="text" onChange={titleChangeHandler} />
+          <input
+            type="text"
+            value={enteredTitle}
+            onChange={titleChangeHandler}
+          />
         </div>
         <div className="new-expense__control">
           <label htmlFor="">Amount</label>
@@ -46,6 +49,7 @@ function ExpenseForm() {
             type="number"
             min="0.01"
             step="0.01"
+            value={enteredAmount}
             onChange={amountChangeHandler}
           />
         </div>
@@ -55,6 +59,7 @@ function ExpenseForm() {
             type="date"
             min="2019-01-01"
             step="2022-12-31"
+            value={enteredDate}
             onChange={dateChangeHandler}
           />
         </div>
